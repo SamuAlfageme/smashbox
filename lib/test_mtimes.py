@@ -18,7 +18,7 @@ oc_client_version = str(str(ocsync_version())[1:-1].replace(", ", "."))
 if oc_client_version=="2.2.4" or oc_client_version=="2.3.3":
    do_not_report_as_failure()
 
-sleep = int(config.get('mtimes_sleep',0)) 
+sleep = int(config.get('mtimes_sleep',0))
 
 import random
 
@@ -31,7 +31,7 @@ def log_times(**kwds):
 
 
 @add_worker
-def worker0(step):    
+def worker0(step):
 
     # do not cleanup server files from previous run
     reset_owncloud_account()
@@ -78,7 +78,7 @@ def worker0(step):
     shared['source_stat'] = os.stat(absfn)
 
 
-        
+
 @add_worker
 def worker1(step):
 
@@ -104,17 +104,17 @@ def worker1(step):
 
         log_times(source=source,dest=dest)
 
-        error_check(dest.st_mtime == round(dest.st_mtime), "Propagated mtime gets rounded up to the nearest second" ) 
+        error_check(dest.st_mtime == round(dest.st_mtime), "Propagated mtime gets rounded up to the nearest second" )
         error_check(abs(source.st_mtime-dest.st_mtime) <= 1.0, 'Expecting not too have more than 1s difference on mtime') # NOT TRUE!
 
 
 
 
-        
 
 
 
-    
+
+
 
 
 

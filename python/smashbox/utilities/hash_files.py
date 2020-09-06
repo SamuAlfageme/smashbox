@@ -5,7 +5,7 @@ from smashbox.utilities import *
 # a hashfile encodes its content checksum in its name
 
 # the name of a hashfile may be specified using a template string (filemask) where {md5} string represents the content checksum
-# for example: "test_{md5}.dat" 
+# for example: "test_{md5}.dat"
 
 # hashfile size may be specified as
 #  - number of bytes (int)
@@ -48,7 +48,7 @@ def count_files(wdir, filemask=None):
 def size2nbytes(size):
     """ Return the number of bytes from the size specification (size may be a distribution or nbytes directly).
     """
-    
+
     import random, math
 
     def make_distrib(size):
@@ -64,7 +64,7 @@ def size2nbytes(size):
     except TypeError:
         return make_distrib(size)
     except ValueError:
-        return make_distrib(size)        
+        return make_distrib(size)
 
 def create_hashfile(wdir,filemask=None,size=None,bs=None,slow_write=None):
     """ Create a random file in wdir.The md5 checksum is placed in the filname name according to filemask: {md5} string in the filemask is replaced by the file checksum.
@@ -107,7 +107,7 @@ def create_hashfile2(wdir,filemask=None,size=None,bs=None,slow_write=None):
     block_data_r = str(os.urandom(nr))       # Only once
 
     #block_data = str(time.time()) + 'a'*bs;
-    #block_data_r = 'a'*nr; 
+    #block_data_r = 'a'*nr;
 
     #time.sleep(0.1)
     #block_data =  str(time.time()) + ":".join(["%09s"%n for n in range(90000)]) #str([str(n)+':' for n in range(10000)])
@@ -120,7 +120,7 @@ def create_hashfile2(wdir,filemask=None,size=None,bs=None,slow_write=None):
     md5.update(block_data_r)
 
     if filemask is None:
-        filemask = "{md5}"        
+        filemask = "{md5}"
 
 
     fn = os.path.join(wdir,filemask.replace('{md5}',md5.hexdigest()))
@@ -140,7 +140,7 @@ def create_hashfile2(wdir,filemask=None,size=None,bs=None,slow_write=None):
     f.close()
 
     logger.info("Written hash file %s, nbytes=%d",fn,nbytes)
-    
+
     return fn,md5.hexdigest()
 
 def analyse_hashfiles(wdir,filemask=None):
@@ -150,9 +150,9 @@ def analyse_hashfiles(wdir,filemask=None):
     If filemask is not provided, analyze all possible files found in wdir.
 
     If filemask is provided, analyze only the files which match the filemask pattern ('{md5}' gets replaced by '*')
-    
+
     """
-    
+
     import glob
     import hashlib
 
@@ -177,10 +177,10 @@ def analyse_hashfiles(wdir,filemask=None):
     else:
         glob_pattern = filemask.replace('{md5}','*')
 
-    
-    for fn in glob.glob(os.path.normpath(os.path.join(wdir,glob_pattern))): 
 
-        if not os.path.isfile(fn): 
+    for fn in glob.glob(os.path.normpath(os.path.join(wdir,glob_pattern))):
+
+        if not os.path.isfile(fn):
             continue # Go for files!
 
         nfiles += 1
@@ -195,30 +195,30 @@ def analyse_hashfiles(wdir,filemask=None):
         nanalysed += 1
 
         md5_data = md5sum(fn)
-        
+
         if md5_data!=md5_name:
             osize = os.path.getsize(fn)
             error_check(False, 'Corrupted file? %s:  md5 expected %s computed %s (observed size=%s)'%(fn,repr(md5_name),repr(md5_data),osize))
-            
+
             ncorrupt += 1
 
     logger.info("Found %d files in %s: analysed %d, corrupted %d",nfiles,wdir,nanalysed,ncorrupt)
-    
+
     return (nfiles,nanalysed,ncorrupt)
 
 def md5sum(fn):
     import hashlib
     md5 = hashlib.md5()
-        
+
     f = file(fn,'rb')
-    
+
     while True:
         chunk = f.read(BLOCK_SIZE)
         if not chunk: break
         md5.update(chunk)
 
     f.close()
-        
+
     return md5.hexdigest()
 
 def adler32(fn):
@@ -230,7 +230,7 @@ def adler32(fn):
         chunk = f.read(BLOCK_SIZE)
         if not chunk: break
         v = zlib.adler32(chunk,v)
-            
+
     f.close()
 
     return '%x' % (v & 0xffffffffL)
@@ -278,7 +278,7 @@ def detect_conflict(wdir):
         l2 = len(a2)
         md51 = hashlib.md5(a1).hexdigest()
         md52 = hashlib.md5(a2).hexdigest()
-        if (md51==md52): 
+        if (md51==md52):
             print 'Conflict file identical to original'
             return 1
         print 'File %s size: %d, test.dat size: %d' % (bl,l1,l2)

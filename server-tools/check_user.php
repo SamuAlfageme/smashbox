@@ -6,7 +6,7 @@
 #
 # License: AGPL
 #
-# To be placed and run on the owncloud application server: 
+# To be placed and run on the owncloud application server:
 #
 #  php -f create_user.php USER PASSWORD
 #
@@ -28,7 +28,7 @@ if(OC_User::userExists($login)) {
 else
   {
     print "user account NOT FOUND:".$login."\n";
-    exit(1);    
+    exit(1);
   }
 
 ?>

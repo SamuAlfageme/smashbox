@@ -3,7 +3,7 @@ package main
 // Written by: Jakub Moscicki, CERN IT, Feb 2017
 // License: AGPL
 
-/* Simple hey-you test server on port 8080. 
+/* Simple hey-you test server on port 8080.
 
 Use "hey" to talk to "you".
 
@@ -12,15 +12,15 @@ Use "hey" to talk to "you".
 Requests:
 GET /x   : wait x ms to return response
 GET /mean/stdev : wait mean +-v stdev to return response
- 
-// prep: 
+
+// prep:
 
 export GOPATH=~/go
 export PATH=/usr/localgo/bin:$PATH
 cd ~/go/src
 git clone https://github.com/cernbox/smashbox.git
 
-// usage: 
+// usage:
 
 $ go install smashbox/performance/you && ~/go/bin/you &
 Started...
@@ -106,7 +106,7 @@ func waitHandler(writer http.ResponseWriter, request *http.Request) {
 		fmt.Fprintf(writer,"error %s",err)
 	}
 
-	
+
 	if len(s) > 1 {
 		stddev,err := strconv.Atoi(s[1])
 		stddev = stddev*1000000
@@ -115,7 +115,7 @@ func waitHandler(writer http.ResponseWriter, request *http.Request) {
 		}
 		wait += int(rand.NormFloat64() * float64(stddev))
 	}
-	
+
 	fmt.Fprintf(writer, "Wait, %d URI %s\n", wait, request.URL.Path)
 	fmt.Fprintf(writer, "%s\n", time.Now())
 	time.Sleep(time.Duration(wait))
@@ -127,7 +127,7 @@ func waitHandler(writer http.ResponseWriter, request *http.Request) {
 func main() {
 
 	fmt.Printf("Started...\n")
-	
+
 	http.HandleFunc("/", waitHandler)
 
 	//log.Fatal(http.ListenAndServeTLS(":443", "server.crt", "server.key", nil))

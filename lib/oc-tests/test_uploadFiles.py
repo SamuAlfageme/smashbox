@@ -108,7 +108,7 @@ def sharer(step):
     run_ocsync(d,user_num=1)
 
     list_files(d+'/localShareDir')
-    checkFilesExist(d) 
+    checkFilesExist(d)
 
     step (8, 'Sharer final step')
 
@@ -140,13 +140,13 @@ def shareeOne(step):
     run_ocsync(d,user_num=2)
 
     list_files(d+'/localShareDir')
-    checkFilesExist(d) 
+    checkFilesExist(d)
 
     step (8, 'Sharee One final step')
 
 @add_worker
 def shareeTwo(step):
-  
+
     step (2, 'Sharee Two creates workdir')
     d = make_workdir()
 
@@ -168,7 +168,7 @@ def shareeTwo(step):
     run_ocsync(d,user_num=3)
 
     list_files(d+'/localShareDir')
-    checkFilesExist(d) 
+    checkFilesExist(d)
 
     step (8, 'Sharee Two final step')
 

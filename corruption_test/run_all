@@ -19,7 +19,7 @@ try:
 except Exception,x:
     print """ ERROR: missing or invalid arguments (%s)
 
-syntax: %s N action 
+syntax: %s N action
 
 N - number of hosts (head of host.list)
 action - %s
@@ -46,7 +46,7 @@ def action_cmd():
 host_list="%s/corruption_test/host.list"%smashdir
 
 for i,host in enumerate(file(host_list)):
-    if N and i>=N: 
+    if N and i>=N:
         break
 
     host = host.strip()

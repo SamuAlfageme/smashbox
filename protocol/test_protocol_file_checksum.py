@@ -51,7 +51,7 @@ def main(step):
     file_download(os.path.basename(filename1),URL,d)
     file_download(os.path.basename(filename2),URL,d)
 
-    analyse_hashfiles(d)   
+    analyse_hashfiles(d)
 
     # pass around  incorrect checksum (of the type supported by the server)
     # the puts should be failing
@@ -64,7 +64,7 @@ def main(step):
     logger.info('*** 2. upload with corrupted checksum value (files should be refused by the server)')
 
     filename1=create_hashfile(d,size=OWNCLOUD_CHUNK_SIZE(0.1))
-    filename2=create_hashfile(d,size=OWNCLOUD_CHUNK_SIZE(3.3))        
+    filename2=create_hashfile(d,size=OWNCLOUD_CHUNK_SIZE(3.3))
 
     r = file_upload(filename1,URL,checksum=corrupted_checksum(filename1))
     fatal_check(r.rc == 412)
@@ -94,14 +94,14 @@ def main(step):
             smashbox.protocol.enable_checksum(cstype)
 
             filename1=create_hashfile(d,size=OWNCLOUD_CHUNK_SIZE(0.1))
-            filename2=create_hashfile(d,size=OWNCLOUD_CHUNK_SIZE(3.3))        
+            filename2=create_hashfile(d,size=OWNCLOUD_CHUNK_SIZE(3.3))
 
             logger.info(' *** testing checkum value: '+cstype+value)
-            
+
             file_upload(filename1,URL,checksum=cstype+value)
             chunk_file_upload(filename2,URL,checksum=cstype+value)
 
             file_download(os.path.basename(filename1),URL,d)
             file_download(os.path.basename(filename2),URL,d)
 
-            analyse_hashfiles(d)               
+            analyse_hashfiles(d)

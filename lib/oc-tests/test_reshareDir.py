@@ -115,7 +115,7 @@ def shareeOne(step):
 
 @add_worker
 def shareeTwo(step):
-  
+
     step (2, 'Sharee Two creates workdir')
     d = make_workdir()
 

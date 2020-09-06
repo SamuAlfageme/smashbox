@@ -60,8 +60,8 @@ cd src
 test -f ${OCSYNC}.tar.bz2 || wget http://download.owncloud.com/download/${DOWNLOAD_PATH}/${OCSYNC}.tar.bz2
 test -f ${MIRALL}.tar.bz2 || wget http://download.owncloud.com/download/${DOWNLOAD_PATH}/${MIRALL}.tar.bz2
 
-test -d ${OCSYNC} || tar fvxj ${OCSYNC}.tar.bz2 
-test -d ${MIRALL} || tar fvxj ${MIRALL}.tar.bz2 
+test -d ${OCSYNC} || tar fvxj ${OCSYNC}.tar.bz2
+test -d ${MIRALL} || tar fvxj ${MIRALL}.tar.bz2
 
 cd ..
 

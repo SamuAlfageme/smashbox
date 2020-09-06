@@ -10,12 +10,12 @@ __doc__ = """ Create/modify a file locally while a file with the same name gets 
 
 2.1.1+ client detects the file being modified locally and restarts itself to complete the sync (which creates a conflict file)
 
-$ egrep -e "Restarting|File has changed since discovery|CONFLICT" /tmp/smashdir/test_fileTinkerDownload/worker1-ocsync.step03.cnt000.log 
+$ egrep -e "Restarting|File has changed since discovery|CONFLICT" /tmp/smashdir/test_fileTinkerDownload/worker1-ocsync.step03.cnt000.log
 
-void OCC::SyncEngine::slotItemCompleted(const OCC::SyncFileItem&, const OCC::PropagatorJob&) "TINKER.DAT" INSTRUCTION_NEW 3 "File has changed since discovery" 
-Restarting Sync, because another sync is needed 1 
+void OCC::SyncEngine::slotItemCompleted(const OCC::SyncFileItem&, const OCC::PropagatorJob&) "TINKER.DAT" INSTRUCTION_NEW 3 "File has changed since discovery"
+Restarting Sync, because another sync is needed 1
 [03/09 09:51:24.136284, 8] _csync_merge_algorithm_visitor:  INSTRUCTION_CONFLICT server file: TINKER.DAT
-void OCC::SyncEngine::slotItemCompleted(const OCC::SyncFileItem&, const OCC::PropagatorJob&) "TINKER.DAT" INSTRUCTION_CONFLICT 5 "" 
+void OCC::SyncEngine::slotItemCompleted(const OCC::SyncFileItem&, const OCC::PropagatorJob&) "TINKER.DAT" INSTRUCTION_CONFLICT 5 ""
 
 
 """
@@ -30,13 +30,13 @@ if type(filesize) is type(''):
     filesize = eval(filesize)
 
 testsets = [
-        { 'fileTinkerDownload_filesize': 300000000, 
+        { 'fileTinkerDownload_filesize': 300000000,
           'fileTinkerDownload_tinker_wait': i
         } for i in range(1,5) ]
 
 
 @add_worker
-def worker0(step):    
+def worker0(step):
     shared = reflection.getSharedObject()
 
     # do not cleanup server files from previous run
@@ -58,7 +58,7 @@ def worker0(step):
     shared['md5_worker0'] = md5
 
     run_ocsync(d)
-        
+
 @add_worker
 def worker1(step):
     shared = reflection.getSharedObject()
@@ -79,7 +79,7 @@ def tinkerer(step):
     d = make_workdir('worker1') # use the same workdir as worker1
 
     step(3,'Tinker with the file while the worker1 downloads')
-    
+
     sleep(tinker_wait)
 
     fn,md5 = create_hashfile2(d,filemask='TINKER.DAT',size=filesize)
@@ -100,7 +100,7 @@ def tinkerer(step):
     error_check(md5sum(fn) == shared['md5_worker0']) # checksum of the TINKER.DAT must much the one produced by other worker
 
 
-    
+
 
 
 

@@ -5,10 +5,10 @@ __doc__ = """ This test moves a DIRA folder to DIRB folder.
 By default, the top-level DIRA folder is moved to DIRB/DIRA
 """
 
-testsets = [ {'dirMove_DIRA':'DIRA', 
+testsets = [ {'dirMove_DIRA':'DIRA',
               'dirMove_DIRB':'DIRB' },
 
-             {'dirMove_DIRA':'A/A/A/DIRA', 
+             {'dirMove_DIRA':'A/A/A/DIRA',
               'dirMove_DIRB':'DIRB'},
 
              {'dirMove_DIRA':'DIRA',
@@ -60,8 +60,8 @@ def workerA(step):
     #createfile(os.path.join(syncdir,'touch'),'0',count=1,bs=1)
 
     run_ocsync(syncdir)
-    
-@add_worker 
+
+@add_worker
 def workerB(step):
 
     step(1,'sync the initial content')
@@ -90,5 +90,5 @@ def workerB(step):
         logger.info("checking %s",f)
         error_check(os.path.isfile(f), "path %s should be a file"%f)
 
-    
-    
+
+

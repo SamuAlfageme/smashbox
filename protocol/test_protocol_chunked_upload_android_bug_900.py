@@ -25,7 +25,7 @@ def main(step):
     # Note: specifying a different chunk size will result in corrupted file!
     # This is a hack until the android-client is properly fixed!
 
-    ANDROID_CHUNKSIZE=1024*1000 
+    ANDROID_CHUNKSIZE=1024*1000
 
     filename=create_hashfile(d,size=int(5.5*ANDROID_CHUNKSIZE))
 
@@ -42,6 +42,6 @@ def main(step):
     r = chunk_file_upload(filename,URL,header_if_match='!@# does not exist 123')
     fatal_check(r.rc == 412) # precondition failed
 
-    # TODO: 
+    # TODO:
     #  - make sure that without user agent header the upload fails
-    #  - 
+    #  -

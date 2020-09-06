@@ -30,18 +30,18 @@ import time
 import tempfile
 import glob
 
-from smashbox.utilities import * 
+from smashbox.utilities import *
 from smashbox.utilities import reflection
 
 @add_worker
 def worker0(step):
     shared = reflection.getSharedObject()
-    
+
     reset_owncloud_account()
     reset_rundir()
 
-    #versions = get_md5_versions_on_server('test.BIG')    
-    
+    #versions = get_md5_versions_on_server('test.BIG')
+
     step(1,'create initial content and sync')
 
     d = make_workdir()
@@ -72,7 +72,7 @@ def worker0(step):
         logger.info("Content NOT changed locally")
     else:
         logger.info("CONTENT CHANGED LOCALLY")
-    
+
     #step(4)
     #run_ocsync(d)
     #step(5)
@@ -82,7 +82,7 @@ def worker0(step):
 @add_worker
 def worker1(step):
     shared = reflection.getSharedObject()
-    
+
     step(2,'sync initial state created by worker 0')
 
     d = make_workdir()
@@ -121,7 +121,7 @@ def worker1(step):
 @add_worker
 def checker(step):
     shared = reflection.getSharedObject()
-    
+
     step(6,'sync the final state of the repository into a fresh local folder')
     #sleep(10)
 
@@ -129,7 +129,7 @@ def checker(step):
     run_ocsync(d)
 
     fn = '%s/test.BIG'%d
-    
+
     shared['w2d1'] = md5sum(fn)
     logger.info(shared['w2d1'])
 
@@ -149,14 +149,14 @@ def checker(step):
     error_check(shared['w2d1'] in [shared['w0v1'],shared['w0v2'],shared['w1v1']], "file downloaded by the checker does not correspond to any file created locally by the workers")
 
     if False:
-       # DISABLED FOR NOW 
+       # DISABLED FOR NOW
        # make sure that all versions stored on a server correpond to a version generated locally
        versions = get_md5_versions_on_server('test.BIG')
-       
+
        for v5,name in versions:
            error_check(not v5 in [shared['w0v1'],shared['w0v2'], shared['w1v1']],
                        'a version %s (filename %s) does not correspond to any previously generated file'%(v5,name))
-   
+
 
     ### ASSERT
     # make sure it is empty

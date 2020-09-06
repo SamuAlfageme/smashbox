@@ -52,15 +52,15 @@ oc_ssl_enabled = True
 # how to invoke shell commands on the server
 # for localhost there is no problem - leave it blank
 # for remote host it may be set like this: "ssh -t -l root $oc_server"
-# note: configure ssh for passwordless login 
+# note: configure ssh for passwordless login
 # note: -t option is to make it possible to run sudo
 oc_server_shell_cmd = ""
 
 # Data directory on the owncloud server.
-# 
+#
 oc_server_datadirectory = os.path.join('/var/www/html',oc_root, 'data')
 
-# a path to server side tools (create_user.php, ...)  
+# a path to server side tools (create_user.php, ...)
 #
 # it may be specified as relative path "dir" and then resolves to
 # <smashbox>/dir where <smashbox> is the top-level of of the tree
@@ -122,10 +122,10 @@ oc_admin_password = "admin"
 # cleanup imported namespaces
 del os
 
-# Verbosity of curl client. 
+# Verbosity of curl client.
 # If none then verbosity is on when smashbox run in --debug mode.
 # set it to True or False to override
-# 
+#
 pycurl_verbose = None
 
 # scp port to be used in scp commands, used primarily when copying over the server log file

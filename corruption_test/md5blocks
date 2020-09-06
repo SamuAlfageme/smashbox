@@ -18,7 +18,7 @@ def md5sum(filename,BLOCK_SIZE,BLOCK_LIMIT,BLOCK_OFFSET):
       if BLOCK_OFFSET>0:
         BLOCK_OFFSET-=1
         continue
-      
+
       dd = hashlib.md5()
       dd.update(buf)
       blocks.append(dd.hexdigest())
@@ -49,19 +49,19 @@ def main():
 
     CHUNK_SIZE = 10*1024*1024 # bytes, this is the minimal chunk size used in the analyzed population of files (the other was 20*MB)
     SKIP_BLOCKS = CHUNK_SIZE/args.BLOCK_SIZE # the number of BLOCK_SIZE blocks contained in one CHUNK_SIZE, these two number should divide without a remainder
-    
+
     if args.scan_offsets:
       N_OFFSETS = os.path.getsize(args.file1)/CHUNK_SIZE + 1
     else:
       N_OFFSETS = 1
-  
+
     for i in range(N_OFFSETS):
       offset = i*SKIP_BLOCKS + args.BLOCK_OFFSET
 
       m,blocks = md5sum(args.file1,args.BLOCK_SIZE,args.BLOCK_LIMIT,offset)
 
       b0s = [i for i,b in enumerate(blocks) if b == blocks[0]]
-      
+
       if len(b0s) > 1:
         print args.file1,': ERROR block at %d repeated %d times (%s)'%(offset*args.BLOCK_SIZE, len(b0s)-1, b0s)
         sys.exit(2)

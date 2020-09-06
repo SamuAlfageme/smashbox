@@ -15,7 +15,7 @@ filesize = int(config.get('concurrentMoveDir_filesize',10))
 delaySeconds = int(config.get('concurrentMoveDir_delaySeconds',3)) # if delaySeconds > 0 then remover waits; else the adder waits;
 
 
-testsets = [ 
+testsets = [
     {'concurrentMoveDir_nfiles':100,
      'concurrentMoveDir_filesize':10,
      'concurrentMoveDir_delaySeconds':10 },  # removing the directory while lots of tiny files are uploaded
@@ -66,7 +66,7 @@ def creator(step):
 
 @add_worker
 def adder(step):
-    
+
     step(2,'sync the empty directory created by the creator')
     d = make_workdir()
     run_ocsync(d)
@@ -84,13 +84,13 @@ def adder(step):
     run_ocsync(d)
 
     # when directory is renamed while file is uploaded the PUT request finishes with Conflict error code
-    
+
     step(5,'mover has finished synchronizing')
 
     # extra sync run to make sure that changes from mover have been correctly propagated
     # first run will not be successful because files with Conflict response are blacklisted
     # second run removes the blacklist and updates the files from scratch again
-    run_ocsync(d,n=2) 
+    run_ocsync(d,n=2)
 
     step(6,'final check')
     run_ocsync(d)
@@ -132,7 +132,7 @@ def final_check(d):
     list_files(d,recursive=True)
 
     d2 = os.path.join(d,'subdir2')
-    
+
     logger.info('final output: %s',d2)
 
     all_files,analysed_files,bad_files = analyse_hashfiles(d2)

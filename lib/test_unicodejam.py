@@ -22,7 +22,7 @@ def checkunicodejam(localdir):
     import glob
     fl = glob.glob(unicode(localdir+os.sep+'*'))
 
-    ngood = 0 
+    ngood = 0
     nbad = 0
 
     for f in fl:
@@ -31,7 +31,7 @@ def checkunicodejam(localdir):
         a = localdir+os.sep+fh.read()
         a = a.decode("UTF-8")
 
-        if a!=f: 
+        if a!=f:
             logger.error('FILELEN: %d',len(f))
             logger.error('FILE   : %s',f)
             logger.error('CONTENT: %s',a)
@@ -50,8 +50,8 @@ import sys
 
 ##
 # various unicode random generators which probe subsets of unicode space
-# 
-# 
+#
+#
 import random
 
 def g_massimo():
@@ -100,7 +100,7 @@ def createunicodejam(localdir):
 
 
 @add_worker
-def worker0(step):    
+def worker0(step):
 
     # do not cleanup server files from previous run
     reset_owncloud_account()
@@ -135,7 +135,7 @@ def worker0(step):
 
     step(3,'Do nothing')
 
-        
+
 @add_worker
 def worker1(step):
 

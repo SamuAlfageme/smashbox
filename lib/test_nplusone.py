@@ -35,19 +35,19 @@ if type(filesize) is type(''):
     filesize = eval(filesize)
 
 testsets = [
-        { 'nplusone_filesize': 1000, 
+        { 'nplusone_filesize': 1000,
           'nplusone_nfiles':100
         },
 
-        { 'nplusone_filesize': OWNCLOUD_CHUNK_SIZE(0.3), 
+        { 'nplusone_filesize': OWNCLOUD_CHUNK_SIZE(0.3),
           'nplusone_nfiles':10
         },
 
-        { 'nplusone_filesize': OWNCLOUD_CHUNK_SIZE(1.3), 
+        { 'nplusone_filesize': OWNCLOUD_CHUNK_SIZE(1.3),
           'nplusone_nfiles':2
         },
 
-        { 'nplusone_filesize': OWNCLOUD_CHUNK_SIZE(3.5), 
+        { 'nplusone_filesize': OWNCLOUD_CHUNK_SIZE(3.5),
           'nplusone_nfiles':1
         },
 
@@ -58,7 +58,7 @@ testsets = [
 ]
 
 @add_worker
-def worker0(step):    
+def worker0(step):
 
     # do not cleanup server files from previous run
     reset_owncloud_account()
@@ -93,14 +93,14 @@ def worker0(step):
     if fscheck:
         # drop the caches (must be running as root on Linux)
         runcmd('echo 3 > /proc/sys/vm/drop_caches')
-        
+
         ncorrupt = analyse_hashfiles(d)[2]
         fatal_check(ncorrupt==0, 'Corrupted files ON THE FILESYSTEM (%s) found'%ncorrupt)
 
     run_ocsync(d)
 
     ncorrupt = analyse_hashfiles(d)[2]
-    
+
     k1 = count_files(d)
 
     error_check(k1-k0==nfiles,'Expecting to have %d files more: see k1=%d k0=%d'%(nfiles,k1,k0))
@@ -122,7 +122,7 @@ def worker0(step):
     push_to_monitoring("%s.norm_synced_files" % source,float((k1-k0)/nfiles))
 
 
-        
+
 @add_worker
 def worker1(step):
     step(1,'Preparation')
@@ -139,7 +139,7 @@ def worker1(step):
 
     push_to_monitoring("%s.worker1.synced_files" % source,k1-k0)
     push_to_monitoring("%s.worker1.cor" % source,ncorrupt)
-                       
+
     error_check(k1-k0==nfiles,'Expecting to have %d files more: see k1=%d k0=%d'%(nfiles,k1,k0))
 
     fatal_check(ncorrupt==0, 'Corrupted files (%d) found'%ncorrupt) #Massimo 12-APR

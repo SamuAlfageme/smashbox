@@ -2,18 +2,18 @@
 
 ## Scope and purpose
 
-Add checksum capability to verify end-to-end integrity of file uploads and downloads operations. 
+Add checksum capability to verify end-to-end integrity of file uploads and downloads operations.
 
 NOT in scope: using checksums as ETAG
 
 ## Enabling transfer checksums in the client
 
 As of version 1.7.2-cernbox and port to 1.8(.2) the type of the checksum is defined in the main config file as:
-   
+
     [General]
     tranmissionChecksum=Adler32
-   
-Since client 2.2.0 checksumming is configured as server capability: https://github.com/owncloud/client/issues/4638#issuecomment-210369951   
+
+Since client 2.2.0 checksumming is configured as server capability: https://github.com/owncloud/client/issues/4638#issuecomment-210369951
 Client discovers from the server if server supports this capability.
 
 Checksum functionality in the client is enabled by the response to capabilities call: https://github.com/cernbox/smashbox/blob/master/protocol/protocol.md#capabilities-call
@@ -25,12 +25,12 @@ For example this response will enable Adler32 checksum on file upload and downlo
       {
           "ocs": {
               "data": {
-                  "capabilities": {   
+                  "capabilities": {
                       "checksums" : {"supportedTypes" : ["Adler32"], "preferredUploadType":"Adler32"},
                       ...
                                   }
        }}}
-       
+
 
 ## Assumptions on the checksum value
 
@@ -38,7 +38,7 @@ The value of Adler32 checksum MUST NOT be zero padded (2.2.4 client will complai
 
 ## Simple PUT (not-chunked)
 
-Client computes the checksum and sends it in the request header OC-Checksum. The OC-Checksum is defined as: checkum_type:checksum_value 
+Client computes the checksum and sends it in the request header OC-Checksum. The OC-Checksum is defined as: checkum_type:checksum_value
 
 Examples:
 
@@ -52,7 +52,7 @@ Examples:
 If the checksum does not match the content on the server then the server returns 412 (Precondition Failed).
 
     Response: 412
-   
+
 BITS NOT YET IMPLEMENTED/UNDER DISCUSSION: [see comments in the source of this file]
 <!--
 indicating the checksum header as the source of the error:
@@ -68,11 +68,11 @@ This is to distinguish between different causes of 412 (the other common one is 
 
 Server may provide the OC-Checksum response header with the GET request. If OC-Checksum is provides then client may use it to verify the checksum on the final destination.
 
-In case of byte-range request the OC-Checksum response header is the checksum of the entire file (like for the GET of the entire file). 
+In case of byte-range request the OC-Checksum response header is the checksum of the entire file (like for the GET of the entire file).
 
 ## Chunked PUT
 
-OC-Checksum of the entire file content is sent with the last chunk PUT request (and of course should not change during the upload). 
+OC-Checksum of the entire file content is sent with the last chunk PUT request (and of course should not change during the upload).
 
 ## Remarks
 

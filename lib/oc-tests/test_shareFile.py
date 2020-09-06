@@ -1,7 +1,7 @@
 
 __doc__ = """
 
-Test basic file sharing between users.  
+Test basic file sharing between users.
 
 +-----------+----------------------+------------------+----------------------------+
 |  Step     |  Sharer              |  Sharee One      |  Sharee Two                |
@@ -71,13 +71,13 @@ filesizeKB = int(config.get('share_filesizeKB',10))
 sharePermissions = config.get('test_sharePermissions', OCS_PERMISSION_ALL)
 
 testsets = [
-    { 
+    {
         'test_sharePermissions':OCS_PERMISSION_ALL
     },
-    { 
+    {
         'test_sharePermissions':OCS_PERMISSION_READ | OCS_PERMISSION_UPDATE
     },
-    { 
+    {
         'test_sharePermissions':OCS_PERMISSION_READ | OCS_PERMISSION_SHARE
     }
 ]
@@ -210,7 +210,7 @@ def shareeOne(step):
 
 @add_worker
 def shareeTwo(step):
-  
+
     step (2, 'Sharee Two creates workdir')
     d = make_workdir()
 

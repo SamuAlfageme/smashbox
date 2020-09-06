@@ -21,13 +21,13 @@ def compute_checksum(fn):
         if CHECKSUM_ENABLED == 'MD5':
             return "MD5:"+md5sum(fn)
     return None
-        
+
 known_checksum_types = ['MD5','Adler32']
 
 def chunk_file_upload(filename,dest_dir_url,chunk_size=None,header_if_match=None,android_client_bug_900=False,checksum=None):
     """ Use the checksum if provided, if not calculate automatically.
     """
-    
+
     logger.info('chunk_file_upload: %s %s %s %s %s',filename,dest_dir_url,chunk_size,header_if_match,android_client_bug_900)
 
     if chunk_size is None:
@@ -96,20 +96,20 @@ def chunk_file_upload(filename,dest_dir_url,chunk_size=None,header_if_match=None
 
             # NOTE: if file previously existed OC-FileId is returned here (oc7 server)
             # NOTE: so client (in theory at least) should not depend on this and hence this should not be part of the protocol
-            #fatal_check('OC-FileId' in reply_headers)  
+            #fatal_check('OC-FileId' in reply_headers)
 
         else: # last chunk
             fatal_check('ETag' in r.headers)
             fatal_check('X-OC-Mtime' in r.headers)
             fatal_check(r.headers.get('X-OC-Mtime','').strip()=='accepted')
-            fatal_check('OC-FileId' in r.headers)  
+            fatal_check('OC-FileId' in r.headers)
 
     return r
 
 def file_upload(filename,dest_dir_url,header_if_match=None,checksum=None):
 
     logger.info('file_upload: %s %s %s',filename,dest_dir_url,header_if_match)
-    
+
     mtime = int(os.path.getmtime(filename))
     total_size = os.path.getsize(filename)
 
@@ -141,7 +141,7 @@ def file_upload(filename,dest_dir_url,header_if_match=None,checksum=None):
     fatal_check('ETag' in r.headers)
     fatal_check('X-OC-Mtime' in r.headers)
     fatal_check(r.headers.get('X-OC-Mtime','').strip()=='accepted')
-    fatal_check('OC-FileId' in r.headers)  
+    fatal_check('OC-FileId' in r.headers)
 
     return r
 
@@ -170,8 +170,8 @@ def file_download(filename,src_dir_url,dest_dir):
 def quota_check(url,depth=0):
     query="""<?xml version="1.0" ?>
   <d:propfind xmlns:d="DAV:"><d:prop>
-      <d:quota-available-bytes/>   
-      <d:quota-used-bytes/>  
+      <d:quota-available-bytes/>
+      <d:quota-used-bytes/>
   </d:prop></d:propfind>
 """
 
@@ -192,7 +192,7 @@ def stat_top_level(url,depth=0):
     client = smashbox.curl.Client()
     r = client.PROPFIND(url,query,depth=depth)
     return r
-   
+
 def all_prop_android(url,depth=0):
     """ All prop request as issued by Owncloud Android Client
     """
@@ -264,7 +264,7 @@ def ls_prop_desktop20(url,depth=0):
     except AttributeError:
         return r
 
-    fatal_check(os.path.commonprefix([x[0] for x in r.propfind_response])) # all hrefs should share a common prefix 
+    fatal_check(os.path.commonprefix([x[0] for x in r.propfind_response])) # all hrefs should share a common prefix
 
     for x in r.propfind_response:
         props = x[1]
@@ -284,10 +284,10 @@ def ls_prop_desktop20(url,depth=0):
             int(props200['{http://owncloud.org/ns}size'])
         except ValueError,x:
             fatal_check(False,"{http://owncloud.org/ns}size: '%s' not an integer"%props200['{http://owncloud.org/ns}size'])
-               
+
 
     return r
-   
+
 
 def get_url_path(url):
     """ Return the path part of the url by stripping a properly formed URL (with protocol:// prefix)

@@ -1,7 +1,7 @@
 Overview
 ========
 
-This is a framework for end-to-end testing the core storage functionality of 
+This is a framework for end-to-end testing the core storage functionality of
 owncloud-based service installation. This test framework may be run interactively from a command line, perform continous testing via cron jobs or stress/load testing. It may be easily integrated in testing and QA process.
 
 What we check:
@@ -11,42 +11,40 @@ What we check:
    * basic protocol checks and documentation
 
 The goal of this is to:
-   * make sure that behaviour of the system is understood and not 
+   * make sure that behaviour of the system is understood and not
      changing unintentionally
    * reproduce difficult bugs more easily
-   * a testcase is better way of reporting and documenting bugs 
+   * a testcase is better way of reporting and documenting bugs
      or undesider behaviour to the developers
    * provide a broad test coverage given a large number of setups and platforms
 
 If you think you see a bug - write a test-case and let others
 reproduce it on their systems.
 
-This is work in progress. 
+This is work in progress.
 
 Project tree
 ============
 
 General layout:
 
-<pre>
-
-   smashbox
-   ├── bin/
-   │   └── smash*                               : main test driver + other utilities for direct shell use
-   ├── etc/				
-   │   └── smashbox.conf                        : configuration file - this is also the default configuration for smashbox/bin utilities and for test-cases
-   ├── lib/                                     : main collection of test-cases
-   │   ├── test_nplusone.py			
-   │   └── ...  			        
-   ├── protocol/                                : sync protocol tests and documentation
-   ├── python/                                  : implementation of tools and API library for tests
-   │   └── smashbox/utilities                   : here is the utilities used directly in the test-cases
-   ├── server/                                  : server-side procedures used in the tests
-   ├── client/                                  : owncloud client helpers 
-   │   └── compile-owncloud-sync-client*        : 
-   └── README                                   : this file
-   
-</pre>
+```
+  smashbox
+  ├── bin/
+  │   └── smash*                               : main test driver + other utilities for direct shell use
+  ├── etc/
+  │   └── smashbox.conf                        : configuration file - this is also the default configuration for smashbox/bin utilities and for test-cases
+  ├── lib/                                     : main collection of test-cases
+  │   ├── test_nplusone.py
+  │   └── ...
+  ├── protocol/                                : sync protocol tests and documentation
+  ├── python/                                  : implementation of tools and API library for tests
+  │   └── smashbox/utilities                   : here is the utilities used directly in the test-cases
+  ├── server/                                  : server-side procedures used in the tests
+  ├── client/                                  : owncloud client helpers
+  │   └── compile-owncloud-sync-client*        :
+  └── README                                   : this file
+```
 
 Supported OSes
 ============
@@ -78,7 +76,7 @@ Location of sync clients:
 
  * /Applications/cernbox.app/Contents/MacOS/cernboxcmd
  * /Applications/owncloud.app/Contents/MacOS/owncloudcmd
- 
+
 Windows
 --------
 
@@ -100,8 +98,8 @@ Clone git repository into your local ``smashbox`` directory.
 
 Copy the etc/smashbox.conf.template into etc/smashbox.conf
 
-Note: a helper shell script, makeconfig, has been added to the etc directory. 
-Edit this file to make some of the more common configuration changes and then run the script.  
+Note: a helper shell script, makeconfig, has been added to the etc directory.
+Edit this file to make some of the more common configuration changes and then run the script.
 This will create a local smashbox.conf file.
 
 Set the oc_sync_cmd to the location of the owncloud command-line
@@ -140,10 +138,10 @@ Examples:
 
     # basic test
     bin/smash lib/test_basicSync.py
-    
+
     # run a test with different paremeters
     bin/smash -o nplusone_nfiles=10 lib/test_nplusone.py
-    
+
     # run all tests - print summaries only
     bin/smash --quiet lib/test_*.py
 
@@ -154,7 +152,7 @@ Different client/server
 =======================
 
 Make sure you can passwordlessly ssh to the server node (only for some admin tasks like creating accounts)
-You will need to set oc_server, oc_server_shell_cmd. 
+You will need to set oc_server, oc_server_shell_cmd.
 
 If you don't keep the same path on the server and the client to the smashbox git repository clone then you will need to set oc_server_tools_path.
 
@@ -197,7 +195,7 @@ Local working directories keep temporary files, local sync folders, etc. General
 Server test accounts follow this general naming scheme (some elements may be ommited, others may be transformed) ::
 
     smash-<runid>-<collection>-<testname>
-   
+
 
 Organization of test directories
 ----------------
@@ -207,7 +205,7 @@ Consider running an simple test::
     smash smashbox/lib/test_nplusone.py
 
 If workdir_runid_enabled option is enabled then local working directory will be everytime different (and unique)::
- 
+
     <runbasedir>/test_nplusone-<runid>
 
 The format of <runid> identifier is defined by the runid option.

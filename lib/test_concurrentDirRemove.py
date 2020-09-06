@@ -1,9 +1,9 @@
 __doc__ = """
 
 This test removes concurrently a directory ('remover' worker) while
-files are added to it ('adder' worker) . 
+files are added to it ('adder' worker) .
 
-According to Webdav specs, PUT into inexisting path does not create missing directories but returns 409 (Conflict). 
+According to Webdav specs, PUT into inexisting path does not create missing directories but returns 409 (Conflict).
 
 Cernbox/EOS: Hence the expected outcome is that part of the files that was already uploaded gets deleted.
 
@@ -23,7 +23,7 @@ nfiles = int(config.get('concurrentRemoveDir_nfiles',10))
 filesizeKB = int(config.get('concurrentRemoveDir_filesizeKB',9000))
 delaySeconds = int(config.get('concurrentRemoveDir_delaySeconds',3)) # if delaySeconds > 0 then remover waits; else the adder waits;
 
-testsets = [ 
+testsets = [
     {'concurrentRemoveDir_nfiles':3,
      'concurrentRemoveDir_filesizeKB':10000,
      'concurrentRemoveDir_delaySeconds':5 },  # removing the directory while a large file is chunk-uploaded
@@ -54,10 +54,10 @@ def creator(step):
     run_ocsync(d)
     final_check(d)
 
-    
+
 @add_worker
 def adder(step):
-    
+
     step(2,'sync the empty directory created by the creator')
     d = make_workdir()
     run_ocsync(d)
@@ -111,13 +111,13 @@ def final_check(d):
     list_files(d,recursive=True)
 
     d2 = os.path.join(d,'subdir')
-    
+
     logger.info('final output: %s',d2)
 
     all_files,analysed_files,bad_files = analyse_hashfiles(d2)
 
     error_check(bad_files == 0,'%s corrupted files in %s'%(bad_files,d2))
-    
+
     #it is hard to determine how many files should be present with 409 Conflict behaviour
     #error_check(analysed_files == nfiles,"not all files are present (%d/%d)"%(analysed_files,nfiles)) # FIXME: well, there may be other files - we don't check that yet
 

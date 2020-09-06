@@ -27,11 +27,11 @@ for s in [[1000, 100], [OWNCLOUD_CHUNK_SIZE(0.3), 10], [OWNCLOUD_CHUNK_SIZE(1.3)
       for p in [None, config.get('fs_nplusone_path1',"")]:
           testsets.append( { 'fs_nplusone_filesize':s[0],
                              'fs_nplusone_nfiles':s[1],
-                             'fs_nplusone_fspath0':t, 
+                             'fs_nplusone_fspath0':t,
                              'fs_nplusone_fspath1':p } )
 
 @add_worker
-def worker0(step):    
+def worker0(step):
 
     # do not cleanup server files from previous run
     reset_owncloud_account()
@@ -40,31 +40,31 @@ def worker0(step):
     reset_rundir()
 
     step(1,'Preparation')
-    
+
     if fspath0:
         os.path.normpath(fspath0)
         d = os.path.join(fspath0,config['oc_server_folder'])
     else:
         d = make_workdir()
         run_ocsync(d)
-    
+
 
     k0 = count_files(d)
 
     step(2,'Add %s files and check if we still have k1+nfiles after resync'%nfiles)
 
     for i in range(nfiles):
-        logger.info('file number {}'.format(i+1)) 
+        logger.info('file number {}'.format(i+1))
         create_hashfile(d,size=filesize)
-        
+
     if not fspath0:
         run_ocsync(d)
 
     #delay between the 2 mount points. when one worker add files via mount point the other have to wait few seconds to see them
     sleep(3)
-        
+
     ncorrupt = analyse_hashfiles(d)[2]
-    
+
     k1 = count_files(d)
 
     error_check(k1-k0==nfiles,'Expecting to have %d files more: see k1=%d k0=%d'%(nfiles,k1,k0))
@@ -72,7 +72,7 @@ def worker0(step):
     fatal_check(ncorrupt==0, 'Corrupted files (%s) found'%ncorrupt)
 
     logger.info('SUCCESS: %d files found',k1)
-        
+
 @add_worker
 def worker1(step):
     step(1,'Preparation')

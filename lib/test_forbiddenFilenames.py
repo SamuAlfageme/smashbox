@@ -70,7 +70,7 @@ def worker0(step):
     run_ocsync(d)
 
     ncorrupt = analyse_hashfiles(d)[2]
-    
+
     k1 = count_files(d)
 
     error_check(k1-k0==nfiles,'Expecting to have %d files more in %s: see k1=%d k0=%d'%(nfiles,d,k1,k0))
@@ -93,7 +93,7 @@ def worker1(step):
 
     ncorrupt = analyse_hashfiles(d)[2]
     k1 = count_files(d)
-                       
+
     error_check(k1-k0==nfiles,'Expecting to have %d files more: see k1=%d k0=%d'%(nfiles,k1,k0))
 
     fatal_check(ncorrupt==0, 'Corrupted files (%d) found'%ncorrupt)

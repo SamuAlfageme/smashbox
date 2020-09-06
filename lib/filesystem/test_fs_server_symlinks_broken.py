@@ -13,7 +13,7 @@ from smashbox.utilities.hash_files import *
 fspath = config.get('fs_server_symlinks_path','/eos/user/%s/%s'%(config['oc_account_name'][0],config['oc_account_name']))
 
 @add_worker
-def worker0(step):    
+def worker0(step):
 
     # cleanup all local files for the test
     reset_owncloud_account()
@@ -61,7 +61,7 @@ def worker0(step):
 
     syncd = make_workdir()
     run_ocsync(syncd)
-    
+
     check_all_good(N=2) # BROKEN SYMLINKS GET REMOVED LOCALLY
 
     step(4,'Synchronization should continue to work inspite of broken server links')
@@ -74,7 +74,7 @@ def worker0(step):
     time.sleep(10)
 
     run_ocsync(syncd)
-    
+
     fatal_check(os.path.exists(os.path.join(syncd,f3)))
 
     check_all_good(N=3) # Sync continues and new file is downloaded

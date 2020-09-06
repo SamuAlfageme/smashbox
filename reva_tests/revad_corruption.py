@@ -39,7 +39,7 @@ def main(step):
     d = make_workdir()
     e = d + '-download' # work directory for downloads
     os.mkdir(e, 0755)
-    
+
     remote_folder = join(revad_target_folder, os.path.basename(os.path.dirname(d)))
     print "d=%s e=%s remote_folder=%s" % (d, e, remote_folder)
 
@@ -60,10 +60,10 @@ def main(step):
     reva_upload_sample_files(remote_folder, hash_files)
 
     # download the hash files to the original location
-    reva_download_sample_files(remote_folder, e, hash_files) 
+    reva_download_sample_files(remote_folder, e, hash_files)
     k1 = count_files(e)
     print "Downloading sample files succeded: numfiles=%d" % (k1)
-    
+
     error_check(k1-k0==0,'Expected to have the same number of files: nfiles=%d sampled=%d downloaded=%d'%(nfiles,k0,k1))
 
 
@@ -146,5 +146,5 @@ def clean_run(remote_folder):
     cmd = "%s storage delete %s" % (reva_cli, remote_folder)
     print "REVA clean: cmd=%s" % (cmd)
     runcmd(cmd)
-    
+
 

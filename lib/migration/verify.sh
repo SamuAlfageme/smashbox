@@ -39,9 +39,9 @@ sort -o  report.d-etags.${ACCOUNT}.eoshome.txt  report.d-etags.${ACCOUNT}.eoshom
 
 X=`comm -12 report.d-etags.${ACCOUNT}.eosuser.txt  report.d-etags.${ACCOUNT}.eoshome.txt`
 
-if [ -n "$X" ]; then 
+if [ -n "$X" ]; then
 echo $X
-error "Repeated directory etags found" 
+error "Repeated directory etags found"
 fi
 
 sort -o  report.d-ids.${ACCOUNT}.eosuser.txt  report.d-ids.${ACCOUNT}.eosuser.txt
@@ -49,9 +49,9 @@ sort -o  report.d-ids.${ACCOUNT}.eoshome.txt  report.d-ids.${ACCOUNT}.eoshome.tx
 
 X=`comm -12 report.d-ids.${ACCOUNT}.eosuser.txt  report.d-ids.${ACCOUNT}.eoshome.txt`
 
-if [ -n "$X" ]; then 
+if [ -n "$X" ]; then
 echo $X
-error "Repeated directory ids found" 
+error "Repeated directory ids found"
 fi
 
 
@@ -60,9 +60,9 @@ sort -o  report.f-ids.${ACCOUNT}.eoshome.txt  report.f-ids.${ACCOUNT}.eoshome.tx
 
 X=`comm -12 report.f-ids.${ACCOUNT}.eosuser.txt  report.f-ids.${ACCOUNT}.eoshome.txt`
 
-if [ -n "$X" ]; then 
+if [ -n "$X" ]; then
 echo $X
-error "Repeated file ids in found" 
+error "Repeated file ids in found"
 fi
 
 echo OK: ${ACCOUNT}

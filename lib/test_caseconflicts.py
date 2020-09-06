@@ -10,7 +10,7 @@ from protocol import file_upload
 import logging
 
 __doc__ = """
-This test generates conflict case filenames (indentical names differing only by case) on the server; then the client will synchronize the files on different folders to check if the same files are downloaded on them. 
+This test generates conflict case filenames (indentical names differing only by case) on the server; then the client will synchronize the files on different folders to check if the same files are downloaded on them.
 The test has been run on Windows OS (which is case insensitive) in order to reproduce a bug found on owncloud client with conflict case filenames:
 
  - Expected behaviour:
@@ -20,9 +20,9 @@ The test has been run on Windows OS (which is case insensitive) in order to repr
  - Actual behaviour:
      Windows: Only one file is downloaded since it is case insensitive. This file is not always the same.
 Test input params:
-  - filename : Name of the file in UpperCamelCase. For example: "TestCaseConflicts" 
+  - filename : Name of the file in UpperCamelCase. For example: "TestCaseConflicts"
   - filesizeKB:  Size of the files to be created
-  - ndownloaders: Number of downloaders 
+  - ndownloaders: Number of downloaders
     The function filenameVariations will generate filenames differing by case:
         For example: "TestCaseConflicts" will generate the filenames:
         ['TestCaseConflicts', 'testcaseconflicts', 'testCaseConflicts', 'testcaseConflicts', 'TestcaseConflicts', 'Testcaseconflicts', 'TestCaseconflicts', 'testCaseconflicts']

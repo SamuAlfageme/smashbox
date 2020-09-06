@@ -59,7 +59,7 @@ def is_excluded(name):
 
 @add_worker
 def creator(step):
-    
+
     reset_owncloud_account()
     reset_rundir()
 
@@ -78,20 +78,20 @@ def creator(step):
         " "
     ]
 
-    charsets = { 'space' : ' ', 
-                 'plus' : '+', 
+    charsets = { 'space' : ' ',
+                 'plus' : '+',
                  'underscore' : '_',
                  'moscicki' : '\xc5\x9b', # some UTF-8 unicode character...
                  'singlequote' : "'"
         }
 
     charsets.update(charsets_excluded_from_sync)
-    
+
     filenames = []
 
     for c in charsets:
         for n in namepatterns:
-            nn =  n.replace('space', "_"+c+"_").replace(' ',charsets[c]) 
+            nn =  n.replace('space', "_"+c+"_").replace(' ',charsets[c])
             #print nn
             filenames.append(nn)
             createfile(os.path.join(d,nn),'1',count=filesizeKB,bs=1000)
@@ -106,7 +106,7 @@ def creator(step):
         for n in namepatterns:
             nn = n.replace('space','_chr'+str(i)+'_').replace(' ',chr(i))
             if nn == '.': # skip this
-                continue 
+                continue
             filenames.append(nn)
             createfile(os.path.join(d,nn),'1',count=filesizeKB,bs=1000)
 

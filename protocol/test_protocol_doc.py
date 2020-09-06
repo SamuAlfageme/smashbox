@@ -35,7 +35,7 @@ def main(step):
 
 def check_propfind_request(header,body):
     # as a bare minimum check if XML syntax is correct
-    
+
     from xml.etree import ElementTree
     ElementTree.fromstring(body)
 
@@ -70,7 +70,7 @@ def parse_docfile(docfile):
         r1 = propfind_request.match(line)
         r2 = propfind_response.match(line)
 
-        if r1 or r2: 
+        if r1 or r2:
             if r1:
                 block_check = check_propfind_request
                 r=r1

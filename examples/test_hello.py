@@ -27,9 +27,9 @@ def helloA(step):
     shared = reflection.getSharedObject()
 
     step(0,'defining n')
-    
+
     shared['n'] = 111
-    
+
     # Variable 'n' is now shared and visible to all the workers.
     # This happens when a value of the variable is assigned.
     #
@@ -39,7 +39,7 @@ def helloA(step):
     # the steps in which other workers are making use of it. Only this
     # will guarantee that the value is set before someone else is
     # trying to make use of it.
-    # 
+    #
     # If you need more than one worker to modify the same
     # shared variable make sure this happens in separate steps.
 
@@ -52,10 +52,10 @@ def helloA(step):
     # If you modify the value in place of a shared.attribute
     # (e.g. list.append or list.sort) then this is NOT visible to other
     # processes until you really make the assignment.
-    # 
+    #
     # Some ideas how to handle lists by assigning a new value:
     #   * use shared['list']+=[a] instead of shared['list'].append(a)
-    #   * use shared['list']=sorted(shared['list']) instead of shared['list'].sort() 
+    #   * use shared['list']=sorted(shared['list']) instead of shared['list'].sort()
     #
     step(2,'waiting...')
 
@@ -66,11 +66,11 @@ def helloA(step):
 
     # this is a fatal assert - execution will stop immediately
     fatal_check(list(shared['xyz'])==[1,2,3,4], 'problem handlign shared xyz=%s'%repr(shared['xyz']))
-    
-@add_worker 
+
+@add_worker
 def helloB(step):
     logger.debug("dir() %s",dir())
-    
+
     shared = reflection.getSharedObject()
 
     step(2,'modifying and reassigning n, xyz')
@@ -82,7 +82,7 @@ def helloB(step):
     error_check(list(shared['xyz'])==[1,2,3,4], 'problem handlign shared xyz=%s'%repr(shared['xyz']))
 
 
-@add_worker    
+@add_worker
 def reporter(step):
     shared = reflection.getSharedObject()
 
@@ -99,14 +99,14 @@ def any_worker(step):
     shared=reflection.getSharedObject()
 
     shared['k'] = 0
-    
+
     step(1,None)
 
     shared['k'] += 1
 
     step(2,None)
     shared['k'] += 1
-    
+
     step(3,None)
     shared['k'] += 1
 
@@ -119,11 +119,11 @@ def any_worker(step):
 
 # this shows how one may add configuration parameters to the testcase
 N = int(config.get('n_hello_workers',5))
-    
+
 logger.info("will create %d additional workers",N)
 
 # here we add the workers (and append the number to each name)
 for i in range(N):
     add_worker(any_worker,'any_worker%d'%i)
-    
-    
+
+

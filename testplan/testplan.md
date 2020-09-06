@@ -4,7 +4,7 @@ Integrity verification must be done for all test cases:
   * Upload
   * Anonymous upload
   * all tests marked with (*)
-  
+
 **Verify integrity of files by downloading them and comparing the md5 checksum.**
 
 
@@ -76,9 +76,9 @@ Integrity verification must be done for all test cases:
 | 5.2        | Short              | Anonymous upload            | File size |  It is shown the file size on MB| | |
 | 5.3        | Short              | Anonymous upload            |  Upload a 1GB file| An alerert message should be shown  | | |
 | 5.4        | Short              | Anonymous upload            |  Upload a file whose size is larger than the maximum available size| An alerert message is shown "Not enought storage available" | Max size| |
-| 5.5        | Short              | Anonymous upload            | Shared a file and enable "Allow public upload" | You shouldnt enable "Allow public upload" in a file  | | |  
+| 5.5        | Short              | Anonymous upload            | Shared a file and enable "Allow public upload" | You shouldnt enable "Allow public upload" in a file  | | |
 | 5.6        | Short              | Anonymous upload            | Upload a file using "Password protect"   |  Files get upload | | |
-| 5.7       | Short              | Anonymous upload            | Check the uploads are visible from the desktop client |  The files are visible from the desktop client| | |  
+| 5.7       | Short              | Anonymous upload            | Check the uploads are visible from the desktop client |  The files are visible from the desktop client| | |
 | 5.8        | Short              | Anonymous upload            |  Shared a file and enable "Allow public upload" via email| The file is shared | | |
 | 5.9        | Short              | Anonymous upload            |  Repeat all previous tests (Anonymous upload) from another tab but you are logged into your personal CERNBox| The file is shared | | |
 |NPLUSONE test 			| The way to perform a nplusone test is the following :	| Whithout parameter ocsync/ocsync Whith parameter it's file transfer.|	e.g : bin/smash -v -o fs_nplusone_fspath0=/eos/user1/m/mecosse2 -o fs_nplusone_fspath1=/tmp/samba2 lib/filesystem/test_fs_nplusone.py  | | | |

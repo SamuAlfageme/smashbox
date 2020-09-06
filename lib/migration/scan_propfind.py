@@ -54,7 +54,7 @@ def main(step):
     NSDAV="{DAV:}"
     NSOC="{http://owncloud.org/ns}"
 
-    
+
     ids_files=[]
     ids_directories=[]
     etags_directories=[]
@@ -64,7 +64,7 @@ def main(step):
     propfind_list=[]
 
     seen_dirs = set()
-    
+
     def scan_dir(URL):
         r=None
         rc=None
@@ -90,26 +90,26 @@ def main(step):
             else:
                 rc=-1 # really bad...
 
-            if IGNORE_403 and rc == 403: 
+            if IGNORE_403 and rc == 403:
                 print "WARN: Forbidden 403 ",URL
                 return
-            else:        
+            else:
                 msg="Failed to PROPFIND. Error code: %s URL: %s DETAILS: %s" % (rc,URL,x)
                 error_check(False,msg)
-                return 
+                return
                 #raise PropfindError()
 
 
         # the parent dir (.) reported by Depth1 must be identical as the parent dir reported by Depth0
         r10=[x for x in r1 if x[0] == r0[0][0]]
-        
+
         if r0 != r10 and not EOS_BUG_2732:
             print "ERROR: r0 != r10"
             print "URL",URL
             print "r0",r0
             print "r10",r10
             sys.exit(-1)
-        
+
         path=r0[0][0]
         attrs=r0[0][1]['HTTP/1.1 200 OK']
 

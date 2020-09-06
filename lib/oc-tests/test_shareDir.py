@@ -1,7 +1,7 @@
 
 __doc__ = """
 
-Test basic directory and file sharing between users.  
+Test basic directory and file sharing between users.
 
 +-----------+-----------------+------------------+------------------+--------------+
 |  Step     |  Sharer         |  Sharee One      |  Sharee Two      |  Admin       |
@@ -208,7 +208,7 @@ def shareeOne(step):
 
 @add_worker
 def shareeTwo(step):
-  
+
     step (2, 'Sharee Two creates workdir')
     d = make_workdir()
 

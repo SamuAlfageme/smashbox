@@ -17,11 +17,11 @@ oc_client_version = str(str(ocsync_version())[1:-1].replace(", ", "."))
 if platform.system().lower() == "darwin" and oc_client_version=="2.3.3":
     do_not_report_as_failure()
 
-testsets = [ {'localDirRenameRecreate_DIRA':'DIRA', 
+testsets = [ {'localDirRenameRecreate_DIRA':'DIRA',
               'localDirRenameRecreate_DIRB':'DIRB',
               'localDirRenameRecreate_moveFilesBack':False},
-             
-             {'localDirRenameRecreate_DIRA':'DIRA', 
+
+             {'localDirRenameRecreate_DIRA':'DIRA',
               'localDirRenameRecreate_DIRB':'DIRB',
               'localDirRenameRecreate_moveFilesBack':True}
              ]
@@ -40,7 +40,7 @@ def check_files_exist(files,d):
     for fn in files:
         f = os.path.join(d,fn)
         logger.info("checking %s",f)
-        error_check(os.path.isfile(f), "path %s should be a file"%f)    
+        error_check(os.path.isfile(f), "path %s should be a file"%f)
 
 @add_worker
 def workerA(step):
@@ -88,7 +88,7 @@ def workerA(step):
     check_final_state(syncdir)
 
 
-@add_worker 
+@add_worker
 def workerB(step):
 
     step(1,'sync the initial content')
@@ -100,7 +100,7 @@ def workerB(step):
     run_ocsync(syncdir)
 
     check_final_state(syncdir)
-    
+
 
 def check_final_state(syncdir):
 
@@ -124,5 +124,5 @@ def check_final_state(syncdir):
 
 
 
-    
-    
+
+

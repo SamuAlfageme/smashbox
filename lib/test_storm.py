@@ -3,7 +3,7 @@ import os
 import time
 import tempfile
 
-__doc__ = """ Each of nuploaders creates nfiles and syncs them at the same time to the same account. Each of ndownloaders downloads the files at the same time, verifies integrity of files and completness of sync. 
+__doc__ = """ Each of nuploaders creates nfiles and syncs them at the same time to the same account. Each of ndownloaders downloads the files at the same time, verifies integrity of files and completness of sync.
 """
 
 from smashbox.utilities import *
@@ -30,7 +30,7 @@ verbose = bool(config.get('storm_verbose',False))
 filesize = config.get('storm_filesize',None)
 
 def uploader(step):
-    
+
     step(1,'Preparation')
     d = make_workdir()
     run_ocsync(d)
@@ -59,7 +59,7 @@ def initializer(step):
     reset_rundir()
 
 
-def downloader(step):    
+def downloader(step):
     step(1,'Active clients are syncing...')
     d = make_workdir()
     run_ocsync(d)

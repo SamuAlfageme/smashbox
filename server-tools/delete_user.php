@@ -6,7 +6,7 @@
 #
 # License: AGPL
 #
-# To be placed and run on the owncloud application server: 
+# To be placed and run on the owncloud application server:
 #
 #  php -f delete_user.php USER
 #

@@ -55,7 +55,7 @@ def workerA(step):
     webdav_propfind_ls(topLevelDir)
 
     run_ocsync(syncdir)
-    
+
     expect_does_not_exist(d2)
     expect_webdav_does_not_exist(topLevelDir)
-    
+

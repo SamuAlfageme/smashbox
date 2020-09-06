@@ -13,7 +13,7 @@ from smashbox.utilities.hash_files import *
 fspath = config.get('fs_server_symlinks_path','/eos/user/%s/%s'%(config['oc_account_name'][0],config['oc_account_name']))
 
 @add_worker
-def worker0(step):    
+def worker0(step):
 
     # cleanup all local files for the test
     reset_owncloud_account()
@@ -77,7 +77,7 @@ def worker0(step):
     check_all_corrupt()
 
     #raise Exception()
- 
+
     ### File created directly on the server
 
     step(3,'Create new server file')

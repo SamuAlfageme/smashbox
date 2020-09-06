@@ -16,7 +16,7 @@ except Exception,x:
  print """ERROR: missing or invalid argument (%s)
 
 syntax: %s N
-  
+
 N is number of test repetitions, you may specify -1 for indefinite loop
 """% (repr(x),sys.argv[0])
 
@@ -47,7 +47,7 @@ while N:
  #print "test number",i
 
  rc = subprocess.call(cmd,shell=True)
- 
+
  if rc != 0:
    break
 

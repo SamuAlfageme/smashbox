@@ -96,12 +96,12 @@ class _smash_:
 
     process_name = None
     process_number = 0
-    
+
     DEBUG = False
 
     # this is a hardcoded maximum number of steps
     N_STEPS = 100
-    
+
     workers = []
     all_procs = []
 
@@ -128,7 +128,7 @@ class _smash_:
 
             _smash_.supervisor_step.value += 1
 
-        
+
 
         if _smash_.DEBUG:
             log('stop',_smash_.supervisor_step.value,_smash_.steps)
@@ -189,7 +189,7 @@ class _smash_:
                logger.error('%s error(s) reported',len(smashbox.utilities.reported_errors))
                import sys
                sys.exit(2)
-                  
+
 
     @staticmethod
     def run():
@@ -198,16 +198,16 @@ class _smash_:
         from multiprocessing import Process, Manager
 
         import smashbox.utilities
-        smashbox.utilities.setup_test()        
+        smashbox.utilities.setup_test()
 
         manager = Manager()
 
         _smash_.shared_object = _smash_SmashSharedObject(os.path.join(config.rundir,'_shared_objects'))
-        
+
         #_smash_.shared_object = shelve.open(os.path.join(config.rundir,'_shared_objects.shelve'))
 
         #print "SUPERVISOR NAMESPACE",_smash_.shared_object.__dict__
-        
+
         _smash_.supervisor_step = manager.Value('i',0)
 
         _smash_.process_name = "supervisor"
@@ -279,7 +279,7 @@ if True:
     # this is OK: config and logger will be visible symbols in the user's test code
     config = smashbox.script.configure_from_blob(_smash_.args.config_blob)
 
-    # reset to the default config state where applicable                                                                                            
+    # reset to the default config state where applicable
     config._test_ignored=None
 
     import smashbox.utilities.reflection
@@ -294,7 +294,7 @@ if True:
        logger = smashbox.script.getLogger('run')
 
        logger.setLevel(logging.NOTSET)
-       
+
        class SmashFilter(logging.Filter):
           def filter(self, record):
              record.smash_process_name = smashbox.utilities.reflection.getProcessName()
@@ -322,7 +322,7 @@ if True:
        logger.addHandler(fh)
        logger.propagate=False
        return logger
-    
+
     try:
        import os
        os.makedirs(config.rundir)
@@ -350,5 +350,5 @@ if __name__ == "__main__":
     _smash_.run()
 
 
-    
-    
+
+

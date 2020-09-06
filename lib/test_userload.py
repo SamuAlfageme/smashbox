@@ -3,7 +3,7 @@ import os
 import time
 import tempfile
 
-__doc__ = """ One uploader, n downloaders. Uploader creates nfiles and syncs them at the same time to the same account. The checker verifies integrity of files and completness of sync. 
+__doc__ = """ One uploader, n downloaders. Uploader creates nfiles and syncs them at the same time to the same account. The checker verifies integrity of files and completness of sync.
 """
 from smashbox.utilities import *
 
@@ -29,7 +29,7 @@ def uploader(step):
 
     reset_owncloud_account()
     reset_rundir()
-    
+
     step(1,'Preparation')
     d = make_workdir()
     run_ocsync(d)
@@ -49,7 +49,7 @@ def uploader(step):
 
 
 def downloader(step):
-    
+
     step(1,'Active clients are syncing...')
     d = make_workdir()
     run_ocsync(d)

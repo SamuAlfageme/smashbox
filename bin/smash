@@ -54,12 +54,12 @@ def main():
    import logging
    logging.addLevelName(35,"SUMMARY")
    logging.SUMMARY = 35
-   
+
    # in the --quiet mode we do not log INFO
    # use log_quiet() to log in the --quiet mode
    def log_quiet(fmt,*args, **kwds):
        logger.log(logging.SUMMARY,fmt,*args,**kwds)
-   
+
    level = logging.WARNING # log warnings, errors and quiet messages
 
    if args.quiet:
@@ -75,12 +75,12 @@ def main():
    # we will pass the loglevel to worker processes in the config
    # object (we use leading underscore for such internal stuff)
    config._loglevel = level
-   
-   # check for mandatory configuration 
+
+   # check for mandatory configuration
    if not hasattr(config,'oc_account_password') or not config.oc_account_password:
       logger.error("The oc_account_password not set in smashbox.conf")
       sys.exit(1)
-            
+
    test_mode = "single"
    tests = []
 
@@ -93,7 +93,7 @@ def main():
          test_mode = "collection"
          for fn in glob.glob(os.path.join(t,'test_*.py')):
             logger.info("Test target: %s",fn)
-            tests.append(fn)            
+            tests.append(fn)
       else:
          #t = os.path.abspath(t)
          tests.append(t)
@@ -121,7 +121,7 @@ def main():
        import socket
        config.oc_server = socket.gethostname()
 
-   
+
    top_smash = os.path.normpath(os.path.dirname(os.path.dirname(os.path.abspath(sys.argv[0]))))
 
    # relative paths are resolved wrt to <top_smash> and MUST start with ./
@@ -154,14 +154,14 @@ def main():
       if not oc_sync_cmd_exe:
          logger.critical("config error: oc_sync_cmd not found in PATH: %s (specified as plain executable)",config.oc_sync_cmd)
          sys.exit(1)
-         
+
    from smashbox.utilities import is_exe
    if not is_exe(oc_sync_cmd_exe):
       logger.critical("config_error: oc_sync_cmd not found %s (specified as: '%s')",oc_sync_cmd_exe,config.oc_sync_cmd)
       sys.exit(1)
 
    # executable is found, now append the arguments if any
-      
+
    #config.oc_sync_cmd = " ".join([oc_sync_cmd_exe] + oc_sync_cmd_args)
 
    import string
@@ -181,7 +181,7 @@ def main():
 
    #
    ###########
-   
+
    if args.dry_run:
       log_quiet('*** DRY RUN ***')
       smashbox.script.config_log(logging.INFO,hide_password=not args.debug)
@@ -224,7 +224,7 @@ def main():
 
    log_quiet('runid: %s',config.runid) # log_quiet
    log_quiet('URL: %s',oc_webdav_url(hide_password=True))  # log_quiet
-   
+
    user_defined_oc_account_name = config.oc_account_name
 
    # report persistent information
@@ -238,7 +238,7 @@ def main():
 
       def barename(t):
          return os.path.splitext(os.path.basename(t))[0]
-      
+
       if test_mode == "single":
          pass
 
@@ -262,7 +262,7 @@ def main():
 
       def run_test(t,j,i):
          set_rundir_name(t, config.runid, j, i)
-         
+
          if i is None:
             ts = None
             log_quiet('running %s in %s as %s default',t,config.rundir,config.oc_account_name) # log_quiet
@@ -270,7 +270,7 @@ def main():
             ts = smashbox.no_engine.testsets[i]
             for opt,val in zip(ts.keys(),ts.values()):
                setattr(config,opt,val)
-         
+
             log_quiet('running %s in %s as %s testset #%s %s',t,config.rundir,config.oc_account_name,i,repr(ts)) # log_quiet
 
          reporter.testcase_start(barename(t),j,i,smashbox.no_engine)
@@ -281,7 +281,7 @@ def main():
       # get introspection information from the test-case itself: all
       # symbols defined by the test-case are loaded into the namespace
       # object (no_engine)
-      
+
       smashbox.no_engine.testsets=[]
 
       from smashbox.utilities import SkipTestExecutionException

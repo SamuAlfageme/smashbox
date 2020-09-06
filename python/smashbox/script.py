@@ -8,9 +8,9 @@ def keyval_tuple(x):
 def arg_parser(**kwds):
     """ Create an ArgumentParser with common options for smash scripts and tools.
     """
-    
+
     parser = argparse.ArgumentParser(**kwds)
-    
+
     parser.add_argument('--option', '-o', metavar="key=val", dest="options", type=keyval_tuple, action='append', help='set config option')
     parser.add_argument('--dry-run', '-n', action='store_true', help='show config options and print what tests would be run')
     parser.add_argument('--quiet', '-q', action="store_true", help='do not produce output (other than errors)')
@@ -29,7 +29,7 @@ class Configuration:
         return getattr(self,x)
 
     def _dict(self,**args):
-        return dict(self.__dict__.items() + args.items()) 
+        return dict(self.__dict__.items() + args.items())
 
     def get(self,x,default):
         logger = getLogger()
@@ -52,7 +52,7 @@ def configure_from_blob(config_blob):
 def dump_config_to_blob():
     import pickle
     return pickle.dumps(config)
-        
+
 def configure(cmdline_opts,config_files=None):
    """ Initialize config object and return it.
 
@@ -65,7 +65,7 @@ def configure(cmdline_opts,config_files=None):
    defined in a configuration file) then eval to the same type (if not
    None). Otherwise leave string values. The string "None" is special
    and it is always converted to None and may always be assigned.
- 
+
    """
 
    if config_files is None:
@@ -100,7 +100,7 @@ def configure(cmdline_opts,config_files=None):
          setattr(config,key,val)
 
    config_log(level=logging.DEBUG)
-   
+
    return config
 
 def config_log(level,hide_password=False):
@@ -113,7 +113,7 @@ def config_log(level,hide_password=False):
           value = repr(getattr(config,d))
           if hide_password and 'password' in d:
              value = "***"
-             
+
           logger.log(level,"CONFIG: %s = %s",d,value)
 
 

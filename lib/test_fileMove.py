@@ -4,7 +4,7 @@ __doc__ = """ This test moves files from one folder to another.
 
 """
 
-testsets = [ {'dirMove_DIRA':'DIRA', 
+testsets = [ {'dirMove_DIRA':'DIRA',
               'dirMove_DIRB':'DIRB' }
              ]
 
@@ -21,7 +21,7 @@ def check_files_exist(files,d):
     for fn in files:
         f = os.path.join(d,fn)
         logger.info("checking %s",f)
-        error_check(os.path.isfile(f), "path %s should be a file"%f)    
+        error_check(os.path.isfile(f), "path %s should be a file"%f)
 
 @add_worker
 def workerA(step):
@@ -71,7 +71,7 @@ def workerA(step):
     check_files_exist(TEST_FILES,d1)
 
 
-@add_worker 
+@add_worker
 def workerB(step):
 
     step(1,'sync the initial content')
@@ -102,5 +102,5 @@ def workerB(step):
     run_ocsync(syncdir)
 
     check_files_exist(TEST_FILES,d1)
-    
-    
+
+

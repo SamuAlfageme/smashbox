@@ -11,9 +11,9 @@ class Response:
 import pycurl, cStringIO
 
 class Client:
-    
+
     extra_headers = {}
-    
+
     def __init__(self,verbose=None):
         c = pycurl.Curl()
 
@@ -37,7 +37,7 @@ class Client:
             self.verbose=verbose
 
 
-        c.setopt(c.VERBOSE, self.verbose) 
+        c.setopt(c.VERBOSE, self.verbose)
 
         self.c = c
 
@@ -48,7 +48,7 @@ class Client:
 
         c.setopt(c.CUSTOMREQUEST, "PROPFIND")
         headers['Depth']=depth
-        c.setopt(c.UPLOAD,1) 
+        c.setopt(c.UPLOAD,1)
 
         import StringIO
         c.setopt(c.READFUNCTION,StringIO.StringIO(query).read)
@@ -67,11 +67,11 @@ class Client:
             logger.info('PROPFIND response body: %s',r.body_stream.getvalue())
 
         if parse_check:
-            if 200 <= r.rc and r.rc < 300: # only parse the reponse type for positive responses 
+            if 200 <= r.rc and r.rc < 300: # only parse the reponse type for positive responses
                 #TODO: multiple Content-Type response headers will confuse the client as well
                 fatal_check('application/xml; charset=utf-8' in r.headers['Content-Type'],'Wrong response header "Content-Type:%s"'%r.headers['Content-Type']) # as of client 1.7 and 1.8
                 r.propfind_response=_parse_propfind_response(r.response_body,depth=depth)
-      
+
         return r
 
 
@@ -81,7 +81,7 @@ class Client:
         c = self.c
 
         c.setopt(c.CUSTOMREQUEST, "PUT")
-        c.setopt(c.UPLOAD,1) 
+        c.setopt(c.UPLOAD,1)
 
         f = open(fn,'rb')
 
@@ -129,22 +129,22 @@ class Client:
 
     def MKCOL(self,url):
         logger.debug('MKCOL %s',url)
-        
+
         c = self.c
-        
+
         c.setopt(c.CUSTOMREQUEST, "MKCOL")
 
         r = self._perform_request(url,{})
 
-        return r        
+        return r
 
 
     def DELETE(self,url):
 
         logger.debug('DELETE %s',url)
-        
+
         c = self.c
-        
+
         c.setopt(c.CUSTOMREQUEST, "DELETE")
 
         # we are usually not interested in response body of this kind of request
@@ -154,14 +154,14 @@ class Client:
 
         r = self._perform_request(url,{})
         r.response_body=body_stream.getvalue()
-        return r        
+        return r
 
     def MOVE(self,url,destination,overwrite=None):
         logger.debug
-        
+
         print 'MOVE %s %s %s'%(url,destination,overwrite)
         c = self.c
-        
+
         c.setopt(c.CUSTOMREQUEST, "MOVE")
         headers={}
         headers['Destination']=destination
@@ -188,7 +188,7 @@ class Client:
 
         if response_obj is None:
             response_obj = Response()
-        
+
         response_obj.rc=c.getinfo(c.HTTP_CODE)
 
         response_obj.headers = smashbox.utilities.structures.CaseInsensitiveDict()
@@ -240,7 +240,7 @@ def _parse_propfind_response(text,depth=None):
     for child in root:
 
         allowed_children_tags(child,['{DAV:}href','{DAV:}propstat']) # only these elements are allowed
-        
+
         fatal_check(len(child.findall('{DAV:}href'))==1) # exactly one href per response
         href = child.find('{DAV:}href')
 
@@ -249,7 +249,7 @@ def _parse_propfind_response(text,depth=None):
         for propstat in child.findall('{DAV:}propstat'):
 
             logger.debug('xml.etree.ElementTree parsing: %s',propstat.tag)
-            
+
             allowed_children_tags(propstat,['{DAV:}prop','{DAV:}status'])
             fatal_check(len(propstat.findall('{DAV:}prop'))==1) # exactly one
             fatal_check(len(propstat.findall('{DAV:}status'))==1) # exactly one
@@ -270,7 +270,7 @@ def _parse_propfind_response(text,depth=None):
                         # In the response body the value of resourcetype property MUST NOT contain whitespaces (implementation as of owncloud client 1.5):
                         #<d:resourcetype><d:collection/></d:resourcetype>
                         fatal_check(resource_type.tag == '{DAV:}collection')
-                        fatal_check(len(list(resource_type)) == 0) # <collection> must have no children 
+                        fatal_check(len(list(resource_type)) == 0) # <collection> must have no children
                         fatal_check(not p.text) # there must not be text in front of <collection>, FIXME: this may be relaxed later to allow whitespaces
                         fatal_check(not resource_type.text) # there must not be text inside <collection>
                         fatal_check(not resource_type.tail) # there must not be text behind <collection>, FIXME: this may be relaxed later to allow whitespaces

@@ -3,7 +3,7 @@ import time
 import tempfile
 
 
-__doc__ = """ 
+__doc__ = """
 
 Synchronize local folder while writing into the file.
 
@@ -29,35 +29,35 @@ slowWrite = int(config.get('slowwrite_slowWrite',1))
 nfiles=1
 
 testsets = [
-        { 'slowwrite_filesizeKB': 2, 
+        { 'slowwrite_filesizeKB': 2,
           'slowwrite_blockSize': 200,
           'slowwrite_slowWrite':1.5
         },
 
-        { 'slowwrite_filesizeKB': 5000, 
+        { 'slowwrite_filesizeKB': 5000,
           'slowwrite_blockSize': MB,
           'slowwrite_slowWrite':1
         },
 
-        { 'slowwrite_filesizeKB': 11000, 
+        { 'slowwrite_filesizeKB': 11000,
           'slowwrite_blockSize': MB,
           'slowwrite_slowWrite':1
         },
 
-        { 'slowwrite_filesizeKB': 25000, 
+        { 'slowwrite_filesizeKB': 25000,
           'slowwrite_blockSize': MB,
           'slowwrite_slowWrite':1
         },
 
 
-        { 'slowwrite_filesizeKB': 50000, 
+        { 'slowwrite_filesizeKB': 50000,
           'slowwrite_blockSize': MB,
           'slowwrite_slowWrite':1
         }
 ]
 
 @add_worker
-def writer(step):    
+def writer(step):
 
     ver=ocsync_version()
 
@@ -65,7 +65,7 @@ def writer(step):
     # for newer clients, the default number of sync retries is 3 which is not enough to get the file synced if the writes are really slow
     # so for newer client we set the --max-sync-retries explicitly to a higher number (this is a new option)
     # ref: https://github.com/owncloud/client/issues/4586
-    
+
     if ver[0] >= 2:
         config.oc_sync_cmd += " --max-sync-retries 20"
 
@@ -93,7 +93,7 @@ def synchronizer(step):
     d = make_workdir('writer') # bother writer and synchronizer share the same workdir
     run_ocsync(d)
 
-    
+
 @add_worker
 def checker(step):
 

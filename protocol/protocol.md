@@ -96,7 +96,7 @@ Response: 200
 
 Response body:
 
-Static information about server capabilities delivered through an OCS call. This is the 
+Static information about server capabilities delivered through an OCS call. This is the
 prefered way of getting information about the server capabilities.
 
 Response Example for ownCloud 8.0.x:
@@ -107,55 +107,55 @@ Response Example for ownCloud 8.0.x:
                 "capabilities": {
                     "core": {
                         "pollinterval": 60
-                    }, 
+                    },
                     "files": {
-                        "bigfilechunking": true, 
-                        "undelete": true, 
+                        "bigfilechunking": true,
+                        "undelete": true,
                         "versioning": true
                     }
                     "files_sharing": {
-                        "api_enabled": true, 
+                        "api_enabled": true,
                         "federation": {
-                            "incoming": true, 
+                            "incoming": true,
                             "outgoing": true
-                        }, 
-                        "group_sharing": true, 
+                        },
+                        "group_sharing": true,
                         "public": {
-                            "enabled": true, 
+                            "enabled": true,
                             "expire_date": {
                                 "enabled": false
-                            }, 
+                            },
                             "password": {
                                 "enforced": false
-                            }, 
-                            "send_mail": false, 
+                            },
+                            "send_mail": false,
                             "upload": true
-                        }, 
-                        "resharing": true, 
+                        },
+                        "resharing": true,
                         "user": {
                             "send_mail": false
                         }
                     }
-                }, 
+                },
                 "notifications": {
                     "ocs-endpoints": [
-                        "list", 
-                        "get", 
+                        "list",
+                        "get",
                         "delete"
                     ]
                 }
-                }, 
+                },
                 "version": {
-                    "edition": "", 
-                    "major": 9, 
-                    "micro": 0, 
-                    "minor": 1, 
+                    "edition": "",
+                    "major": 9,
+                    "micro": 0,
+                    "minor": 1,
                     "string": "9.0.1"
                 }
-            }, 
+            },
             "meta": {
-                "message": null, 
-                "status": "ok", 
+                "message": null,
+                "status": "ok",
                 "statuscode": 100
             }
         }
@@ -189,7 +189,7 @@ Namespace for non-standard properties: `http://owncloud.org/ns`
 There are no format restrictions on the ETag value. However, for historical reasons the following deprecated rules are valid for the value of the ETag header:
 
  - if ETag header value is enclosed in double quotes ("double-quoted") then client should strip off the quote characters
- - if ETag header value contains the word then "-gzip", client should remove that with no replace. Ref http://github.com/owncloud/client/issues/1195 
+ - if ETag header value contains the word then "-gzip", client should remove that with no replace. Ref http://github.com/owncloud/client/issues/1195
 
 #### Properties
 
@@ -203,7 +203,7 @@ PROPFIND Depth:infinity is not supported: client will try this for compatibility
 
 ### Quota Check Call
 
-Client displays user quota information. For that it does a PROPFIND call to the root of the 
+Client displays user quota information. For that it does a PROPFIND call to the root of the
 user space on the webdav server. Quota is reported per account (or per quota node) defined on the storage server. The result of this query will be the same for all directories (URI part of the request) which belong to the same account (or quota node).
 
 Syntax:
@@ -236,12 +236,12 @@ Reponse body example:
         </d:propstat>
       </d:response>
     </d:multistatus>
-    
+
 
 ### Connection Validation Call
 
 To detect if there is still a vital uplink to the server, client does a PROPFIND request
-to the top level directory to query the last modified timestamp. 
+to the top level directory to query the last modified timestamp.
 
 This call needs working authentication and is used to verify that authentication and the
 network connection in general is still up and running. Depending on the result of this call
@@ -282,8 +282,8 @@ This call only happens to the server top directory.
 
 FIXME: this section and its example is plain wrong and needs reviewing
 
-To detect changes of data on the server repository client issues stat-like calls to the 
-top level directory of a sync connection to request the last modification timestamp on a regular basis. 
+To detect changes of data on the server repository client issues stat-like calls to the
+top level directory of a sync connection to request the last modification timestamp on a regular basis.
 
 Syntax:
     > PROPFIND /remote.php/webdav/ HTTP/1.1
@@ -295,7 +295,7 @@ Syntax:
         <d:getetag/>
       </d:prop>
     </d:propfind>
-    
+
 Reponse: 207
 
 Response body example:
@@ -327,8 +327,8 @@ Response body example:
 
 
 Client returns with a listing of all top level files and directories with their meta data.
-Comparing the ETag of the toplevel directory with the one from the previous call, client 
-can detect data changes on the server. In case the top level ETag changed, client can 
+Comparing the ETag of the toplevel directory with the one from the previous call, client
+can detect data changes on the server. In case the top level ETag changed, client can
 traverse the changed server tree by the ETag information.
 
 ### List directory
@@ -354,7 +354,7 @@ Syntax:
         <oc:size/>
       </d:prop>
     </d:propfind>
-    
+
 Response: 207
 
 Response body: see restrictions and limitations paragraph
@@ -432,13 +432,13 @@ Response body example:
         </d:propstat>
       </d:response>
     </d:multistatus>
-    
+
 Explanation of the `PROPFIND` result attributes:
 
 * `oc:id`: FileID of file or directory
 * `oc:permissions`: Permissions of the file or directory (see: https://github.com/owncloud/client/blob/master/doc/architecture.rst#server-side--permissions)
 * `oc:size`: Size in bytes of file or directory (recursive size of the directory tree)
-* `oc:getetag`: ETag 
+* `oc:getetag`: ETag
 * `oc:downloadURL`: Direct download URL (extension)
 * `oc:dDC`: Direct download cookie (extension)
 * `d:resourcetype`: either sub element `collection` or empty for files
@@ -447,10 +447,10 @@ Explanation of the `PROPFIND` result attributes:
 
 More details on custom webdav properties : https://github.com/owncloud/client/blob/master/doc/architecture.rst#custom-webdav-properties
 
-    
+
 ### Create directory
 
-Syntax: 
+Syntax:
 
     MKCOL /remote.php/webdav/new_directory
 
@@ -467,7 +467,7 @@ Specific error code handling: None
 ### Move file or directory
 
 
-Syntax: 
+Syntax:
 
     MOVE /remote.php/webdav/old_name
     Destination: /remote.php/webdav/new_location/new_name
@@ -508,7 +508,7 @@ Specific error code handling:
 * `404` - Not considered an error, because the file (directory) is already gone.
 
 
-### File Download 
+### File Download
 
 Client downloads files from the ownCloud server by HTTP GET requests via
 the WebDAV route on the server. Since GET requests do not have the same
@@ -534,7 +534,7 @@ Response Custom Header:
 `Last-Modified`: Thu, 03 Sep 2015 13:50:22 GMT - the last modification time
                  of the resource in question. Use to update the meta data
                  of the file in the sync engine.
-                 
+
 `ETag`:          `"6c17343130f542a7410569a5f0c88abc"` - the current ETag of
                the file. Note that the ETag may be enclosed in quotes
                for historical reason.
@@ -545,7 +545,7 @@ Specific error code handling:
 * `404`: The file to download was meanwhile deleted on the server
 
 
-### Plain File Upload 
+### Plain File Upload
 
 File upload to the server happens through HTTP PUT. If the file size exceeds a certain size, the file uploads happens through so
 called "big file chunking", see next chapter.
@@ -580,7 +580,7 @@ Response Custom Header:
                           modification time. If that is not set, client
                           is supposed to send a subsequent PROPSET to set
                           the files modification time.
-                          
+
 `OC-FileId:     00004551ocobzus5kn6s` - the file id of the file
 
 `ETag:          "17e18721bf7133b5449f18b8a2b1dae1"` - the new ETag of the file.
@@ -594,9 +594,9 @@ Specific error code handling:
       sync run and create a conflict file with the local changes.
 
 
-### Chunked File Upload 
+### Chunked File Upload
 
-Note: new generation fo chunked upload is under development and it is described here: 
+Note: new generation fo chunked upload is under development and it is described here:
 https://github.com/cernbox/smashbox/blob/master/protocol/chunking.md
 
 If the file size exceeds a certain size, the file uploads happens
@@ -635,7 +635,7 @@ All header described in "Plain File Upload" and in addition:
 
 `OC-Chunked:        1`  - indicates chunked file transfer.
 
-Response Custom Header: 
+Response Custom Header:
 
 No custom headers for responses to first and intermediate chunks
 requests.  For the response to the final chunk request, all response
@@ -761,8 +761,8 @@ should be specified for the owncloud sync protocol.
 
 On platforms with case preserving instead of case sensitive file systems (MacOSX and Windows)
 case clashes are handled by a client side check: If a file is to be downloaded by the client
-and another file that would cause a file name clash already exists, the client does not finalize 
-the download but generates a user error. This should motivate the user to manually resolve 
-the name clash. 
+and another file that would cause a file name clash already exists, the client does not finalize
+the download but generates a user error. This should motivate the user to manually resolve
+the name clash.
 
 If the file name clash is resolved, the client resumes the existing hidden downloaded file.
